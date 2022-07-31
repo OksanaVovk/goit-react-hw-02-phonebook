@@ -1,12 +1,15 @@
+import ContactItem from './ContactItem';
 import React from 'react';
 
-const ContactList = ({ contactArray, id, name, number }) => (
+const ContactList = ({ contactArray, onDeleteCont }) => (
   <ul>
-    {{ contactArray }.map(contact => (
-      <li key={contact.id}>
-        {contact.name}
-        <span>{contact.number}</span>
-      </li>
+    {contactArray.map(contact => (
+      <ContactItem
+        id={contact.id}
+        name={contact.name}
+        number={contact.number}
+        onDeleteCon={onDeleteCont}
+      />
     ))}
   </ul>
 );
