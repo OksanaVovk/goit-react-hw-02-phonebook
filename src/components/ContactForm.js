@@ -1,6 +1,6 @@
 import 'react-native-get-random-values';
 import { nanoid } from 'nanoid';
-const { Component } = require('react');
+import { Component } from 'react';
 
 export default class ContactForm extends Component {
   state = {

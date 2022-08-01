@@ -1,10 +1,9 @@
 import ContactForm from './ContactForm';
 import Filter from './Filter';
 import ContactList from './ContactList';
-import 'react-native-get-random-values'
-import { nanoid } from "nanoid";
-const { Component } = require("react");
-
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
+import { Component } from 'react';
 
 export default class App extends Component {
   state = {
@@ -16,37 +15,51 @@ export default class App extends Component {
 
   handleFilterChange = event => {
     return this.setState({ filter: event.currentTarget.value });
-  }
+  };
 
-  onFormSubmit = (data) => {
-    const isRepead = this.state.contacts.some(contact => contact.name.toLowerCase().includes(data.name.toLowerCase()));
-    isRepead ? alert(`${data.name} is already in contacts`) :
-    this.setState(prevState => ({ contacts: [{ id: nanoid(), ...data }, ...prevState.contacts] }))
-  }
-  
+  onFormSubmit = data => {
+    const isRepead = this.state.contacts.some(contact =>
+      contact.name.toLowerCase().includes(data.name.toLowerCase())
+    );
+    isRepead
+      ? alert(`${data.name} is already in contacts`)
+      : this.setState(prevState => ({
+          contacts: [{ id: nanoid(), ...data }, ...prevState.contacts],
+        }));
+  };
+
   getVisiableContacts = () => {
     const { contacts, filter } = this.state;
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact => contact.name.toLowerCase().includes(normalizedFilter));
-    
-  }
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter)
+    );
+  };
 
-  deleteCont = (contId) => {
+  deleteCont = contId => {
     this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact=> contact.id !== contId) 
-    }))
-  }
+      contacts: prevState.contacts.filter(contact => contact.id !== contId),
+    }));
+  };
 
   render() {
-    const {filter } = this.state;
+    const { filter } = this.state;
     const visiableContacts = this.getVisiableContacts();
-    return (<div>
-      <h1>Phonebook</h1>
-      <ContactForm onSubmit={this.onFormSubmit} />
-      <h2>Contacts</h2>
-      <Filter id={this.filtId} value={filter} onChange={this.handleFilterChange} />
-      <ContactList contactArray={visiableContacts} onDeleteCont={this.deleteCont} />
-    </div>)
-   
+    return (
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.onFormSubmit} />
+        <h2>Contacts</h2>
+        <Filter
+          id={this.filtId}
+          value={filter}
+          onChange={this.handleFilterChange}
+        />
+        <ContactList
+          contactArray={visiableContacts}
+          onDeleteCont={this.deleteCont}
+        />
+      </div>
+    );
   }
 }
